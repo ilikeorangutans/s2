@@ -10,15 +10,17 @@ package de.jakusys.settler.game;
 public interface Simulatable {
 
 	/**
-	 * Performs one step in the simulation and updates the internal state of the
-	 * object.
+	 * Returns true if this instance has to be removed from the simulation. If
+	 * true is returned, this object will be removed from the the running
+	 * {@link Simulation}s list of {@link Simulatable}s.
 	 */
-	void step();
+	boolean isDisposable();
 
 	void setSimulation(Simulation simulation);
 
 	/**
-	 * Returns true if this instance has to be removed from the simulation.
+	 * Performs one step in the simulation and updates the internal state of the
+	 * object.
 	 */
-	void isDisposable();
+	void step();
 }

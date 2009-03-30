@@ -13,6 +13,8 @@ public abstract class AbstractBuilding implements Building {
 
 	protected BuildingType buildingType;
 
+	protected boolean disposable;
+
 	protected final Flag flag;
 
 	protected Simulation simulation;
@@ -35,15 +37,15 @@ public abstract class AbstractBuilding implements Building {
 		return null;
 	}
 
+	public boolean isDisposable() {
+		return disposable;
+	}
+
 	public void setBuildingType(BuildingType buildingType) {
 		this.buildingType = buildingType;
 	}
 
 	public void setSimulation(Simulation simulation) {
 		this.simulation = simulation;
-	}
-
-	public void isDisposable() {
-		
 	}
 }

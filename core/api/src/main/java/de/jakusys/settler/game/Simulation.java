@@ -12,4 +12,5 @@ public interface Simulation {
 	 * Performs a single step in the simulation.
 	 */
 	void step();
+
 }

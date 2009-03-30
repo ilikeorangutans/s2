@@ -28,7 +28,13 @@ public class SimulationImpl implements Simulation {
 
 		for (Iterator<Simulatable> i = data.getSimulatables().iterator(); i
 				.hasNext();) {
-			i.next().step();
+			Simulatable s = i.next();
+			if (s.isDisposable()) {
+				if (log.isDebugEnabled())
+					log.debug("Removing disposed simulatable: " + s);
+			} else {
+				s.step();
+			}
 		}
 	}
 

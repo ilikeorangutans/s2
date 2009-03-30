@@ -26,6 +26,15 @@ public class ConstructionSiteBuildingType extends AbstractBuildingType {
 		this.target = target;
 	}
 
+	private void buildingComplete() {
+		log.debug("Building " + target.getName() + " complete!");
+		building.setBuildingType(target);
+	}
+
+	public List<Ware> getBuildMaterials() {
+		return null;
+	}
+
 	public void step() {
 		progress += 10;
 		if (progress >= 100) {
@@ -34,16 +43,9 @@ public class ConstructionSiteBuildingType extends AbstractBuildingType {
 		log.debug(getName() + " at " + progress + "%.");
 	}
 
-	private void buildingComplete() {
-		log.debug("Building " + target.getName() + " complete!");
-	}
-
 	@Override
 	public String toString() {
 		return getName();
 	}
 
-	public List<Ware> getBuildMaterials() {
-		return null;
-	}
 }

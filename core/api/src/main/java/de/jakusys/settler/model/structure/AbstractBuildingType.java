@@ -6,6 +6,8 @@ public abstract class AbstractBuildingType implements BuildingType {
 
 	protected Building building;
 
+	protected boolean disposable;
+
 	protected final String name;
 
 	protected Simulation simulation;
@@ -20,6 +22,10 @@ public abstract class AbstractBuildingType implements BuildingType {
 
 	public String getName() {
 		return name;
+	}
+
+	public boolean isDisposable() {
+		return disposable;
 	}
 
 	public void setBuilding(Building building) {
