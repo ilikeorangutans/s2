@@ -1,5 +1,6 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<description>Contains support code for the actual GUI implementations. </description>
 	<parent>
 		<artifactId>ui</artifactId>
 		<groupId>de.jakusys</groupId>
@@ -8,6 +9,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>de.jakusys</groupId>
 	<artifactId>support</artifactId>
+	<name>S2 GUI support</name>
 	<version>0.0.1-SNAPSHOT</version>
 	<build>
 		<plugins>

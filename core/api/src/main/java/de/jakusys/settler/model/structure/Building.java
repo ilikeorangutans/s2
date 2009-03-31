@@ -1,10 +1,25 @@
 package de.jakusys.settler.model.structure;
 
-import de.jakusys.settler.game.Simulatable;
+import de.jakusys.settler.model.map.Flag;
 
-public interface Building extends Simulatable, Structure {
+/**
+ * Describes a building. A building is a container for a {@link BuildingType}.
+ * By separating building and its type its easy to change the type and behaviour
+ * of a building.
+ * 
+ * @author Jakob Külzer
+ * 
+ */
+public interface Building extends Structure {
 
 	BuildingType getBuildingType();
+
+	/**
+	 * Returns the flag associated with this building.
+	 * 
+	 * @return
+	 */
+	Flag getFlag();
 
 	void setBuildingType(BuildingType buildingType);
 

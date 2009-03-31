@@ -5,6 +5,12 @@ import java.util.List;
 import de.jakusys.settler.game.Simulatable;
 import de.jakusys.settler.model.ware.Ware;
 
+/**
+ * Describes the type and behaviour of a building.
+ * 
+ * @author Jakob Külzer
+ * 
+ */
 public interface BuildingType extends Simulatable {
 
 	Building getBuilding();

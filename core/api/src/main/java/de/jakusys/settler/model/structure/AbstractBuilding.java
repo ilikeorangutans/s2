@@ -9,7 +9,8 @@ import de.jakusys.settler.model.map.Flag;
  * @author jakob
  * 
  */
-public abstract class AbstractBuilding implements Building {
+public abstract class AbstractBuilding extends AbstractStructure implements
+		Building {
 
 	protected BuildingType buildingType;
 
