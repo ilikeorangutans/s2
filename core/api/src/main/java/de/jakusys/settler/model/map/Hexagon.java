@@ -28,6 +28,10 @@ public interface Hexagon {
 
 	Map<HexagonAdjancency, Hexagon> getNeighbours();
 
+	Road getRoad();
+
+	Terrain getTerrain();
+
 	int getX();
 
 	int getY();
@@ -39,5 +43,5 @@ public interface Hexagon {
 	 */
 	boolean hasFlag();
 
-	Terrain getTerrain();
+	void setRoad(Road road);
 }

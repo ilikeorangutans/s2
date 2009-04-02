@@ -1,5 +1,7 @@
 package de.jakusys.settler.pathfinder;
 
+import java.util.Iterator;
+
 import de.jakusys.settler.model.map.Hexagon;
 
 public interface PassableStrategy {
@@ -42,6 +44,26 @@ public interface PassableStrategy {
 		public boolean isPassable(Hexagon h) {
 			if (super.isPassable(h)) {
 				return h.getTerrain().allowsRoads();
+			} else {
+				return false;
+			}
+		}
+	}
+
+	public class FlagBuildingPassableStrategy extends
+			RoadBuildingPassableStrategy {
+
+		@Override
+		public boolean isPassable(Hexagon hexagon) {
+			if (super.isPassable(hexagon)) {
+				// Visit all neighbours and make sure they don't have a flag:
+				for (Iterator<Hexagon> it = hexagon.getNeighbours().values()
+						.iterator(); it.hasNext();) {
+					if (it.next().hasFlag()) {
+						return false;
+					}
+				}
+				return true;
 			} else {
 				return false;
 			}

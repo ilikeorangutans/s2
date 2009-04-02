@@ -9,18 +9,20 @@ import de.jakusys.settler.model.terrain.TerrainImpl;
 
 public class HexagonImpl implements Hexagon {
 
+	private Flag flag;
+
 	private int height;
 
 	private final Map<HexagonAdjancency, Hexagon> neighbours = new HashMap<HexagonAdjancency, Hexagon>(
 			10);
 
-	private Flag flag;
+	private Road road;
+
+	private final Terrain terrain;
 
 	private final int x;
 
 	private final int y;
-
-	private final Terrain terrain;
 
 	public HexagonImpl(int x, int y, int height) {
 		this(x, y, height, TerrainImpl.SEA);
@@ -33,6 +35,11 @@ public class HexagonImpl implements Hexagon {
 		this.terrain = terrain;
 	}
 
+	public void addFlag(Flag flag) {
+		this.flag = flag;
+		flag.setHexagon(this);
+	}
+
 	public void addNeighbour(HexagonAdjancency adjacency, Hexagon hexagon) {
 		if (hexagon == null) {
 			return;
@@ -41,6 +48,10 @@ public class HexagonImpl implements Hexagon {
 		if (hexagon.getNeighbour(adjacency.getOpposite()) == null) {
 			hexagon.addNeighbour(adjacency.getOpposite(), this);
 		}
+	}
+
+	public Flag getFlag() {
+		return flag;
 	}
 
 	public int getHeight() {
@@ -53,6 +64,30 @@ public class HexagonImpl implements Hexagon {
 
 	public Map<HexagonAdjancency, Hexagon> getNeighbours() {
 		return neighbours;
+	}
+
+	public Road getRoad() {
+		return road;
+	}
+
+	public Terrain getTerrain() {
+		return terrain;
+	}
+
+	public int getX() {
+		return x;
+	}
+
+	public int getY() {
+		return y;
+	}
+
+	public boolean hasFlag() {
+		return flag != null;
+	}
+
+	public void setRoad(Road road) {
+		this.road = road;
 	}
 
 	@Override
@@ -69,30 +104,5 @@ public class HexagonImpl implements Hexagon {
 		}
 
 		return m;
-	}
-
-	public void addFlag(Flag flag) {
-		this.flag = flag;
-		flag.setHexagon(this);
-	}
-
-	public Flag getFlag() {
-		return flag;
-	}
-
-	public boolean hasFlag() {
-		return flag != null;
-	}
-
-	public int getX() {
-		return x;
-	}
-
-	public int getY() {
-		return y;
-	}
-
-	public Terrain getTerrain() {
-		return terrain;
 	}
 }

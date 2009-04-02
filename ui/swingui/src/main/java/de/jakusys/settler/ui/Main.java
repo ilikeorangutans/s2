@@ -1,10 +1,7 @@
 package de.jakusys.settler.ui;
 
-
 import java.awt.BorderLayout;
 import java.awt.Container;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -13,19 +10,15 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.JToggleButton;
+import javax.swing.JToolBar;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import de.jakusys.settler.model.map.Flag;
-import de.jakusys.settler.model.map.FlagImpl;
 import de.jakusys.settler.model.map.Hexagon;
 import de.jakusys.settler.model.map.Map;
 import de.jakusys.settler.model.map.MapImpl;
-import de.jakusys.settler.model.map.Path;
-import de.jakusys.settler.model.map.PathImpl;
-import de.jakusys.settler.pathfinder.DijkstraPathfindingStrategy;
-import de.jakusys.settler.pathfinder.PassableStrategy;
-import de.jakusys.settler.pathfinder.PathfindingStrategy;
+import de.jakusys.settler.ui.action.BuildFlagAction;
+import de.jakusys.settler.ui.action.BuildRoadAction;
 import de.jakusys.settler.ui.event.HexagonEvent;
 import de.jakusys.settler.ui.event.HexagonEventListener;
 import de.jakusys.settler.ui.renderer.TerrainRenderer;
@@ -63,34 +56,18 @@ public class Main extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		map = new MapImpl("test", 10, 10);
 
-		PathfindingStrategy pf = new DijkstraPathfindingStrategy();
-		pf
-				.setPassableStrategy(new PassableStrategy.RoadBuildingPassableStrategy());
-
-		Flag f1 = new FlagImpl();
-		map.getHexagon(1, 1).addFlag(f1);
-		Flag f2 = new FlagImpl();
-		map.getHexagon(8, 8).addFlag(f2);
-		Flag f3 = new FlagImpl();
-		map.getHexagon(7, 2).addFlag(f3);
-		Flag f4 = new FlagImpl();
-		map.getHexagon(2, 5).addFlag(f4);
-
-		Path p = new PathImpl();
-		p.fromHexagons(pf.findPath(map, f1.getHexagon(), f2.getHexagon()));
-		new PathImpl().fromHexagons(pf.findPath(map, f1.getHexagon(), f3
-				.getHexagon()));
-		new PathImpl().fromHexagons(pf.findPath(map, f4.getHexagon(), f2
-				.getHexagon()));
-		new PathImpl().fromHexagons(pf.findPath(map, f3.getHexagon(), f2
-				.getHexagon()));
-
-		pf.findPath(map, map.getHexagon(1, 1), map.getHexagon(0, 0));
-
 		mapPanel = new MapPanel(map);
-		Container c = getContentPane();
-		c.setLayout(new BorderLayout());
-		c.add(mapPanel, BorderLayout.CENTER);
+		Container contentPane = getContentPane();
+		contentPane.setLayout(new BorderLayout());
+		contentPane.add(mapPanel, BorderLayout.CENTER);
+
+		final BuildRoadAction buildRoadAction = new BuildRoadAction(mapPanel);
+		final BuildFlagAction buildFlagAction = new BuildFlagAction(mapPanel);
+
+		JToolBar toolbar = new JToolBar("Tools", JToolBar.VERTICAL);
+		toolbar.add(buildFlagAction);
+		toolbar.add(buildRoadAction);
+		contentPane.add(toolbar, BorderLayout.BEFORE_LINE_BEGINS);
 
 		mapPanel.addHexagonEventListener(new HexagonEventListener() {
 
@@ -99,33 +76,6 @@ public class Main extends JFrame {
 				selectedCoordinatesLabel.setText("clicked: " + h.getX() + "/"
 						+ h.getY() + ", has flag: " + h.hasFlag()
 						+ ", terrain: " + h.getTerrain().getName());
-
-				pathfindingButton.setEnabled(true);
-				pathfindingButton.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						if (pathfindingButton.isSelected()) {
-							final PathfindingStrategy pf = new DijkstraPathfindingStrategy();
-							pf
-									.setPassableStrategy(new PassableStrategy.RoadBuildingPassableStrategy());
-							mapPanel
-									.addHexagonEventListener(new HexagonEventListener() {
-
-										public void hexagonHovered(
-												HexagonEvent hexagonEvent) {
-											System.out.println(pf.findPath(map,
-													h, hexagonEvent
-															.getHexagon()));
-										}
-
-										public void hexagonSelected(
-												HexagonEvent hexagonEvent) {
-										}
-									});
-						} else {
-
-						}
-					}
-				});
 			}
 
 			public void hexagonHovered(HexagonEvent hexagonEvent) {
@@ -155,7 +105,7 @@ public class Main extends JFrame {
 		zoomPanel.add(slider);
 		zoomPanel.add(zoomLabel);
 
-		c.add(zoomPanel, BorderLayout.SOUTH);
+		contentPane.add(zoomPanel, BorderLayout.SOUTH);
 
 		JPanel detailsPanel = new JPanel();
 		detailsPanel.setBorder(BorderFactory.createCompoundBorder(BorderFactory
@@ -170,7 +120,7 @@ public class Main extends JFrame {
 		pathfindingButton = new JToggleButton("Pathfinding");
 		pathfindingButton.setEnabled(false);
 		detailsPanel.add(pathfindingButton);
-		c.add(detailsPanel, BorderLayout.NORTH);
+		contentPane.add(detailsPanel, BorderLayout.NORTH);
 
 		setSize(600, 600);
 		setVisible(true);

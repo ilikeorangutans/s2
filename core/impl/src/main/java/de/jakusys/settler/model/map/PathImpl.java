@@ -5,16 +5,15 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
-
 public class PathImpl implements Path {
 
-	private Flag end;
+	private Hexagon end;
 
-	private Flag start;
+	private Hexagon start;
 
 	private List<Hexagon> hexagons = new LinkedList<Hexagon>();
 
-	public Flag getEnd() {
+	public Hexagon getEnd() {
 		return end;
 	}
 
@@ -22,7 +21,7 @@ public class PathImpl implements Path {
 		return hexagons;
 	}
 
-	public Flag getStart() {
+	public Hexagon getStart() {
 		return start;
 	}
 
